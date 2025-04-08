@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "odoo-perusahaan": {
+      "command": "D:\\MCP\\venv\\Scripts\\python.exe",
+      "args": [
+        "D:\\MCP\\odoo_mcp_server.py"
+      ],
+      "env": {
+        "PYTHONPATH": "D:\\MCP\\venv\\Lib\\site-packages",
+        "ODOO_URL": "https://api-odoo.visiniaga.com",
+        "ODOO_DB": "OdooDev",
+        "ODOO_USER": "od@visiniaga.com",
+        "ODOO_PASSWORD": "P"
+      }
+    }
+  }
+}

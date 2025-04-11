@@ -96,7 +96,16 @@ def list_models() -> str:
 
 @mcp.resource("odoo://model/{model}/schema")
 def get_model_schema(model: str) -> str:
-    """Get schema for a specific model"""
+    """
+    Get schema for a specific Odoo model
+    
+    Args:
+        model: The technical name of the Odoo model (e.g., 'res.partner', 'product.product')
+    
+    Examples:
+        odoo://model/res.partner/schema
+        odoo://model/sale.order/schema
+    """
     odoo = mcp.app.lifespan_context
     
     # Get model info
@@ -144,14 +153,22 @@ def get_record_count(model: str) -> str:
 @mcp.tool()
 def search_records(ctx: Context, model: str, domain: List = None, limit: int = 1000, fields: List[str] = None) -> str:
     """
-    Search for records in a model
+    Search for records in an Odoo model
     
     Args:
-        model: Odoo model name (e.g., 'res.partner')
-        domain: Domain filter as a list of tuples (e.g., [['is_company', '=', True]])
-        limit: Maximum number of records to return
-        fields: List of fields to fetch (if empty, returns all fields)
+        model: Odoo model name (e.g., 'res.partner', 'product.product', 'sale.order')
+        domain: Domain filter as a list of triplets (e.g., [['is_company', '=', True], ['customer_rank', '>', 0]])
+               Format: [[field_name, operator, value], ...] 
+               Common operators: =, !=, >, >=, <, <=, like, ilike, in, not in
+        limit: Maximum number of records to return (default: 1000)
+        fields: List of fields to fetch (e.g., ['id', 'name', 'email']). If empty, returns all non-binary fields
+    
+    Examples:
+        search_records(model="res.partner", domain=[["is_company", "=", true], ["country_id.code", "=", "US"]], limit=10)
+        search_records(model="product.product", fields=["name", "list_price", "default_code"])
+        search_records(model="sale.order", domain=[["state", "=", "sale"]], fields=["name", "partner_id", "amount_total"])
     """
+    
     try:
         # Log mulai pencarian dengan parameter
         ctx.info(f"Searching {model} with domain: {domain}, limit: {limit}, fields: {fields}")
@@ -223,14 +240,32 @@ def search_records(ctx: Context, model: str, domain: List = None, limit: int = 1
 def run_report(ctx: Context, model: str, report_name: str, domain: List = None, group_by: List[str] = None, 
              measures: List[str] = None) -> str:
     """
-    Run a simple aggregation report on model data
+    Run a simple aggregation report on Odoo model data
     
     Args:
-        model: Odoo model name (e.g., 'sale.order')
-        report_name: Name for this report
-        domain: Domain filter as a list of tuples (optional)
-        group_by: Fields to group by
-        measures: Fields to aggregate (count, sum, avg)
+        model: Odoo model name (e.g., 'sale.order', 'purchase.order', 'account.move')
+        report_name: A descriptive name for this report that will appear as the title
+        domain: Domain filter as a list of triplets (e.g., [['state', '=', 'sale'], ['date_order', '>=', '2023-01-01']])
+               Format: [[field_name, operator, value], ...]
+        group_by: Fields to group by (e.g., ['partner_id', 'user_id']) - REQUIRED
+        measures: Numeric fields to aggregate (e.g., ['amount_total', 'amount_untaxed'])
+    
+    Examples:
+        run_report(
+            model="sale.order", 
+            report_name="Sales by Customer", 
+            domain=[["state", "=", "sale"]], 
+            group_by=["partner_id"], 
+            measures=["amount_total"]
+        )
+        
+        run_report(
+            model="account.move", 
+            report_name="Invoices by Month", 
+            domain=[["type", "=", "out_invoice"], ["state", "=", "posted"]], 
+            group_by=["invoice_date_month"], 
+            measures=["amount_total"]
+        )
     """
     try:
         ctx.info(f"Running report on {model} with domain: {domain}, group_by: {group_by}, measures: {measures}")
@@ -360,7 +395,12 @@ def compare_records(model: str, record_ids: List[int]) -> str:
     return f"""Please compare the following records from the {model} model:
 Record IDs: {record_list}
 
-1. Fetch the records using the search_records tool
+1. Fetch the records using the search_records tool with a domain like:
+   search_records(
+       model="{model}",
+       domain=[["id", "in", {record_ids}]],
+       limit=10
+   )
 2. Compare the key attributes of these records
 3. Highlight significant differences
 4. Identify patterns or insights from the comparison"""

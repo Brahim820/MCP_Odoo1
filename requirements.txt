@@ -8,3 +8,5 @@ packaging==23.2
 protobuf==4.25.3
 pyreadline3==3.4.1
 sympy==1.12
+pypdf
+python-docx

@@ -1,84 +1,83 @@
-# ODOO MCP SERVER - PANDUAN INSTALASI
+SERVEUR ODOO MCP - GUIDE D'INSTALLATION
+Préparation
 
-## Persiapan
-1. **Install Claude Desktop**: 
-   - Unduh Claude Desktop dari https://claude.ai/download
-   - Ikuti instruksi instalasi untuk menyelesaikan proses instalasi
-   - Pastikan Claude Desktop sudah berjalan setidaknya sekali untuk membuat folder konfigurasi
+    Installer Claude Desktop :
+        Téléchargez Claude Desktop depuis https://claude.ai/download
+        Suivez les instructions d'installation pour finaliser le processus
+        Assurez-vous que Claude Desktop a été exécuté au moins une fois pour créer le dossier de configuration
 
-2. **Install Python 3.13 atau lebih tinggi**:
-   - Jika Python belum terinstal, unduh dari https://www.python.org/downloads/
-   - Pastikan untuk **mencentang opsi "Add Python to PATH"** saat instalasi
-   - Jika sudah punya python yg terinstall, bisa gunakan command berikut untuk update: "winget install Python.Python.3.13"
+    Installer Python 3.13 ou une version supérieure :
+        Si Python n'est pas installé, téléchargez-le depuis https://www.python.org/downloads/
+        Assurez-vous de cocher l'option "Add Python to PATH" pendant l'installation
+        Si vous avez déjà Python installé, vous pouvez utiliser cette commande pour le mettre à jour : winget install Python.Python.3.13
 
-## Langkah Instalasi
+Étapes d'installation
 
-1. **Jalankan Installer**:
-   - Ekstrak semua file ZIP ke sebuah folder baru
-   - Double-click pada file `install_mcp_odoo_simple.bat`
-   - Tunggu proses instalasi selesai
-   - Jangan tutup jendela installer sampai muncul pesan "INSTALASI SELESAI"
+    Exécuter l'installateur :
+        Extrayez tous les fichiers ZIP dans un nouveau dossier
+        Double-cliquez sur le fichier install_mcp_odoo_simple.bat
+        Attendez que le processus d'installation soit terminé
+        Ne fermez pas la fenêtre de l'installateur avant l'apparition du message "INSTALLATION TERMINÉE"
 
-2. **Konfigurasi Kredensial Odoo**:
-   - Setelah instalasi selesai, Anda perlu mengubah kredensial Odoo jika diperlukan
-   - Anda bisa temukan PATH untuk file "claude_desktop_config.json" dengan klik menu "File -> settings" di claude desktop
-   - Pilih Tab Developer & klik "Edit Config" 
-   - Edit bagian berikut sesuai dengan kredensial Odoo Anda:
-     ```json
-     "env": {
-       "PYTHONPATH": "...",
-       "ODOO_URL": "https://api-odoo.visiniaga.com",
-       "ODOO_DB": "OdooDev",
-       "ODOO_USER": "od@visiniaga.com",
-       "ODOO_PASSWORD": "Passwoord"
-     }
-     ```
+    Configurer les identifiants Odoo :
+        Après l'installation, vous devrez modifier les identifiants Odoo si nécessaire
+        Vous pouvez trouver le chemin du fichier claude_desktop_config.json en cliquant sur le menu "File -> Settings" dans Claude Desktop
+        Sélectionnez l'onglet Developer et cliquez sur "Edit Config"
+        Modifiez les sections suivantes en fonction de vos identifiants Odoo :
+        JSON
 
-3. **Restart Claude Desktop**:
-   - Tutup Claude Desktop jika sedang berjalan
-   - Buka kembali Claude Desktop untuk memuat konfigurasi baru
+        "env": {
+          "PYTHONPATH": "...",
+          "ODOO_URL": "https://api-odoo.visiniaga.com",
+          "ODOO_DB": "OdooDev",
+          "ODOO_USER": "od@visiniaga.com",
+          "ODOO_PASSWORD": "Passwoord"
+        }
 
-4. **Setting AI Agent**:
-   - Buka New project
-   - isi prompt dari file "system prompt baru.txt" di bagian Knowledge Base 
+    Redémarrer Claude Desktop :
+        Fermez Claude Desktop s'il est en cours d'exécution
+        Rouvrez Claude Desktop pour charger la nouvelle configuration
 
-## Penggunaan
+    Configurer l'agent AI :
+        Créez un nouveau projet
+        Remplissez le prompt à partir du fichier system prompt baru.txt dans la section Knowledge Base
 
-Setelah instalasi berhasil, Anda dapat menggunakan Claude untuk:
+Utilisation
 
-1. **Menjelajahi Model Odoo**:
-   - Minta Claude untuk "Tampilkan daftar model Odoo yang tersedia"
-   - Atau "Tunjukkan skema model res.partner"
+Une fois l'installation terminée, vous pouvez utiliser Claude pour :
 
-2. **Mencari Data**:
-   - Minta Claude untuk "Cari 10 pelanggan teratas di Odoo"
-   - Atau "Tampilkan daftar pesanan penjualan bulan ini"
+    Explorer les modèles Odoo :
+        Demandez à Claude : "Affichez la liste des modèles Odoo disponibles"
+        Ou : "Montrez le schéma du modèle res.partner"
 
-3. **Membuat Laporan**:
-   - Minta Claude untuk "Buat laporan penjualan berdasarkan produk"
-   - Atau "Analisis stok berdasarkan lokasi"
+    Rechercher des données :
+        Demandez à Claude : "Recherchez les 10 principaux clients dans Odoo"
+        Ou : "Affichez la liste des commandes de vente de ce mois-ci"
 
-## Uninstall Program
+    Créer des rapports :
+        Demandez à Claude : "Créez un rapport de ventes par produit"
+        Ou : "Analysez les stocks par emplacement"
 
-Jika Anda ingin menghapus MCP Odoo Server:
-1. Jalankan `uninstall_mcp_odoo_simple.bat`
-2. Ikuti instruksi yang muncul
-3. Restart Claude Desktop setelah uninstall selesai
+Désinstallation du programme
 
-## Pemecahan Masalah
+Si vous souhaitez supprimer le serveur MCP Odoo :
 
-Jika mengalami masalah:
+    Exécutez uninstall_mcp_odoo_simple.bat
+    Suivez les instructions affichées
+    Redémarrez Claude Desktop après la désinstallation
 
-1. **Claude tidak menampilkan ikon MCP** (ikon palu di kanan bawah):
-   - Pastikan file konfigurasi sudah benar
-   - Restart Claude Desktop
+Résolution des problèmes
 
-2. **Error koneksi Odoo**:
-   - Periksa kredensial Odoo di file konfigurasi
-   - Pastikan URL Odoo dapat diakses dari komputer Anda
+En cas de problème :
 
-3. **Error Python**:
-   - Pastikan Python terinstal dengan benar
-   - Coba reinstall dengan menjalankan installer lagi
+    Claude n'affiche pas l'icône MCP (icône de marteau en bas à droite) :
+        Vérifiez que le fichier de configuration est correct
+        Redémarrez Claude Desktop
 
-Untuk bantuan lebih lanjut, hubungi tim IT.
+    Erreur de connexion Odoo :
+        Vérifiez les identifiants Odoo dans le fichier de configuration
+        Assurez-vous que l'URL Odoo est accessible depuis votre ordinateur
+
+    Erreur Python :
+        Assurez-vous que Python est correctement installé
+        Essayez de réinstaller en relançant l'installateur
